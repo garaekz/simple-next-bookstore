@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form-select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-size: 16px 12px;
+  background-repeat: no-repeat;
+  background-position-y: center;
+  background-position-x: 85%;
+}
+
+@media only screen and (max-width: 767px) {
+  .form-select {
+    background-position-x: 95%;
+  }
+}
+
+@layer base {
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+}
+
+.scrollbar::-webkit-scrollbar-thumb{background:theme('colors.lightest');border-radius:10px;transition:.5s}
+.scrollbar::-webkit-scrollbar-track{background:#f1f1f1;border-radius:10px;transition:.5s}
+.scrollbar::-webkit-scrollbar{width:8px;border-radius:10px}
+.scrollbar::-webkit-scrollbar-thumb:hover{background:theme('colors.primary')}
+
+.slick-current .featured-product {
+  transform: scale(1.1);
+  box-shadow: 0px 10px 80px -70px rgb(0 0 0 / 70%);
+  z-index: 1;
+}
+
+@media (min-width: 1200px) {
+  .slick-current .featured-product {
+    transform: scale(1.2);
+  }
+}
