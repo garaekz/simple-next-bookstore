@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { CgArrowLongRight } from "react-icons/cg";
 import { GoFlame } from "react-icons/go";
-import Slider from "react-slick";
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { useGetFeaturedBooksQuery } from "../../store/api";
-import { featuredSettings } from "../../utils/slider.config";
+import { featuredBreakpoints, featuredSettings } from "../../utils/slider.config";
 import { FeaturedProductCard } from "../FeaturedProductCard";
 import { Book } from "../../types/cart.types";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper";
 
 export function HeaderWithSlider() {
   const { data, error, isLoading, isFetching } = useGetFeaturedBooksQuery({});
@@ -38,14 +37,22 @@ export function HeaderWithSlider() {
         </div>
       </div>
       <div className="w-full xl:w-1/2">
-        <Slider {...featuredSettings }>
+        <Swiper
+          navigation={true}
+          modules={[Navigation]}
+          slidesPerView={3}
+          spaceBetween={3}
+          loop={true}
+          centeredSlides={true}
+          breakpoints={featuredBreakpoints}
+          className="mySwiper"
+        >
           {featuredBooks.map((product: Book, index: number) => (
-            <FeaturedProductCard
-              key={index}
-              product={product}
-            />
+            <SwiperSlide key={index}>
+              <FeaturedProductCard key={index} product={product} />
+            </SwiperSlide>
           ))}
-        </Slider>
+        </Swiper> 
       </div>
     </>
   );

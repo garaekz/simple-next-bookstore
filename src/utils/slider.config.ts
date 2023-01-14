@@ -27,14 +27,53 @@ export const featuredSettings = {
   ],
 };
 
+export const featuredBreakpoints = {
+  1200: {
+    slidesPerView: 3,
+    spaceBetween: 0,
+  },
+  768: {
+    slidesPerView: 1,
+    spaceBetween: 10,
+  },
+  200: {
+    slidesPerView: 1,
+    spaceBetween: 10,
+  },
+};
+
+export const genresBreakpoints = {
+  1200: {
+    slidesPerView: 6,
+    spaceBetween: 0,
+  },
+  991: {
+    slidesPerView: 4,
+    spaceBetween: 10,
+  },
+  767: {
+    slidesPerView: 3,
+    spaceBetween: 10,
+  },
+  479: {
+    slidesPerView: 2,
+    spaceBetween: 10,
+  },
+  200: {
+    slidesPerView: 2,
+    spaceBetween: 10,
+  },
+};
+
 export const genresSettings = {
   infinite: true,
   slidesToShow: 6,
-  slidesToScroll: 6,
+  slidesToScroll: 1,
   arrows: true,
   dots: false,
   autoplay: false,
   speed: 1000,
+  touchThreshold: 1000,
   responsive: [
     {
       breakpoint: 1199,
