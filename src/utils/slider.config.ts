@@ -65,6 +65,25 @@ export const genresBreakpoints = {
   },
 };
 
+export const relatedBooksBreakpoints = {
+  1200: {
+    slidesPerView: 4,
+    spaceBetween: 30,
+  },
+  991: {
+    slidesPerView: 3,
+    spaceBetween: 25,
+  },
+  767: {
+    slidesPerView: 2,
+    spaceBetween: 20,
+  },
+  200: {
+    slidesPerView: 1,
+    spaceBetween: 10,
+  },
+};
+
 export const genresSettings = {
   infinite: true,
   slidesToShow: 6,

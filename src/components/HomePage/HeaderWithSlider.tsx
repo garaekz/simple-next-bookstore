@@ -45,7 +45,7 @@ export function HeaderWithSlider() {
           loop={true}
           centeredSlides={true}
           breakpoints={featuredBreakpoints}
-          className="mySwiper"
+          className="featured-slider"
         >
           {featuredBooks.map((product: Book, index: number) => (
             <SwiperSlide key={index}>

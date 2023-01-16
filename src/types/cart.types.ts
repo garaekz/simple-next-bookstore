@@ -1,12 +1,14 @@
 export interface Author {
   _id: string;
   name: string;
+  slug: string;
 }
 
 export interface Genre {
   _id: string;
   name: string;
   image: string;
+  slug: string;
 }
 
 export interface Book {

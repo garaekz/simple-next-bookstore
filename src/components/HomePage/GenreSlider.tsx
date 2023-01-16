@@ -3,12 +3,10 @@ import { GoFlame } from "react-icons/go";
 import { useGetAllGenresQuery } from "../../store/api";
 import { Genre } from "../../types/cart.types";
 import Image from "next/image";
+import { genresBreakpoints } from "../../utils/slider.config";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import { genresBreakpoints } from "../../utils/slider.config";
 
 export function GenreSlider() {
   const { data, error, isLoading, isFetching } = useGetAllGenresQuery({});
@@ -44,8 +42,7 @@ export function GenreSlider() {
                 <SwiperSlide key={genre._id}>
                   <div className="flex items-center justify-center">
                     <Link
-                      key={genre._id}
-                      href={`/shop?genre=${genre._id}`}
+                      href={`/shop?genre=${genre.slug}`}
                       tabIndex={0}
                       className="rounded-lg border border-[#f0f0f0] bg-white text-heading p-3 text-sm rounded-md relative inline-block z-[1] font-bold shadow-explore mr-3"
                     >

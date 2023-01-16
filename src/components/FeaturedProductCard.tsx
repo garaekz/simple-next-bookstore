@@ -33,11 +33,11 @@ export function FeaturedProductCard({ product }: { product: Book }) {
         <div className="-m-1 mb-2.5">
           {product.discount > 0 ? (
             <>
-              <span className="text-[#d6d6d6] text-lg font-bold mx-1 line-through	">
-                ${product.price.toFixed(2)}
-              </span>
               <span className="text-heading text-xl font-bold mx-1">
                 ${product.discountedPrice.toFixed(2)}
+              </span>
+              <span className="text-[#d6d6d6] text-lg font-bold mx-1 line-through	">
+                ${product.price.toFixed(2)}
               </span>
             </>
           ) : (
