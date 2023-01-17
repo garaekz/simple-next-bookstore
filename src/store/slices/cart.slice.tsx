@@ -27,7 +27,6 @@ export const cartSlice = createSlice({
           totalPrice = book.discountedPrice;
         }
         state.items.push({ book, quantity: 1, totalPrice });
-        state.lastItem = book;
       }
       updateTotals(state);
     },

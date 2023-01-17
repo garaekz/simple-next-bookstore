@@ -16,5 +16,4 @@ export const store = () =>
   });
 
 export const wrapper = createWrapper(store);
-export type RootState = ReturnType<typeof store.getState>
 export default store;
