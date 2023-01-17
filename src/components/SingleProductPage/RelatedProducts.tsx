@@ -9,11 +9,11 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 export function RelatedProducts({ book }: { book: Book }) {
-  const { data, error, isLoading, isFetching } = useGetRelatedBooksQuery(book._id);
+  const { data, error, isLoading, isFetching } = useGetRelatedBooksQuery(book._id, {refetchOnMountOrArgChange: true, refetchOnFocus: false, refetchOnReconnect: true });
   if (isLoading) return <RelatedProductCardSkeleton />;
   if (error) return <div>Failed to load</div>;
   const relatedBooks = data.data;
-  return (
+  return relatedBooks.length && (
     <>
       <div className="bg-white pb-[50px] pt-[10px]">
         <div className="px-[15px] md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl w-full mx-auto">
@@ -28,10 +28,9 @@ export function RelatedProducts({ book }: { book: Book }) {
               Related Products
             </h2>
             {relatedBooks ? (
-              <Swiper
-              slidesPerView={4}
+            <Swiper
               spaceBetween={30}
-              loop={true}
+              loop={relatedBooks.length > 4 ? true : false}
               pagination={{
                 clickable: true,
               }}
@@ -40,7 +39,8 @@ export function RelatedProducts({ book }: { book: Book }) {
               className="related-products-swiper"
             >
               {relatedBooks.map((book: Book) => (
-                <SwiperSlide key={book._id}>
+                <SwiperSlide key={book._id}
+                >
                   <SingleProductCard key={book._id} product={book} />
                 </SwiperSlide>
               ))}

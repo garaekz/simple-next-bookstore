@@ -6,16 +6,25 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { FcShop } from "react-icons/fc";
 import { IoCartOutline } from "react-icons/io5";
 import { useRouter } from "next/router";
+import { useSelector } from "react-redux";
+import { BaseState } from "../types/state.types";
+import SingleCartProduct from "./Cart/SingleCartProduct";
+import { useAddToCartToast } from "../hooks/addToCart.hook";
 
 function MainNavbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const cartQuantity = 5;
+  const [isCartOpen, setIsCartOpen] = useState(false); 
+  const cart = useSelector((state: BaseState) => state.cart);
+  console.log(cart);
+  const cartQuantity = cart.totalQuantity;
+  const cartTotal = cart.totalPrice;
   const closeAllMenus = () => {
     setIsMenuOpen(false);
     setIsCartOpen(false);
   };
+  useAddToCartToast();
+
   return (
     <>
       <header className="py-[15px] lg:py-0 fixed h-20 inset-x-0 top-0 bg-white z-30 flex items-center">
@@ -107,6 +116,52 @@ function MainNavbar() {
           </div>
         </div>
       </header>
+      <div
+        className={`${
+          isCartOpen ? "right-0" : "right-[-600px]"
+        } w-full md:w-[600px] fixed inset-y-0 z-40 transition-all duration-500`}
+      >
+        <div className="scrollbar bg-white h-full w-full md:w-[600px] flex flex-col py-[30px] px-[15px] md:py-[60px] md:px-[50px] overflow-auto">
+          <div className="flex justify-between items-center border-b-2 border-light pb-[18px]">
+            <h2 className="text-[#27272e] mb-0 text-[26px] font-bold">
+              Cart review
+            </h2>
+            <button
+              onClick={() => setIsCartOpen(false)}
+              className="h-10 w-10 text-body rounded-full bg-light flex items-center justify-center hover:bg-primary hover:text-white transition duration-300"
+            >
+              <FaTimes />
+            </button>
+          </div>
+          <div className="flex-auto py-[30px]">
+            <ul>
+              {cart.items.map((item, index) => (
+                <SingleCartProduct key={index} item={item} />
+              ))}
+            </ul>
+          </div>
+          <div className="border-t-2 border-light">
+            <h3 className="flex items-center justify-between my-[22px] text-[20px] font-bold">
+              <span>Subtotal</span>
+              <span>${cartTotal.toFixed(2)}</span>
+            </h3>
+            <div className="flex gap-6 font-bold">
+              <Link
+                href="/shop"
+                className="block relative w-full text-center text-white bg-primary py-[15px] rounded-md transition duration-300 before:absolute before:inset-0 before:w-full before:h-full before:transition before:transition-all before:duration-500 hover:before:scale-110 before:rounded before:bg-primary z-10 before:z-[-1]"
+              >
+                View Cart
+              </Link>
+              <Link
+                href="/shop"
+                className="block relative w-full text-center text-white bg-secondary py-[15px] rounded-md transition duration-300 before:absolute before:inset-0 before:w-full before:h-full before:transition before:transition-all before:duration-500 hover:before:scale-110 before:rounded before:bg-secondary z-10 before:z-[-1]"
+              >
+                Checkout
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

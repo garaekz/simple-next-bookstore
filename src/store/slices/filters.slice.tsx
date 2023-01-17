@@ -1,10 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-export interface FilterState {
-  genre: string | null;
-  author: string | null;
-  sort: string;
-}
+import { FilterState } from "../../types/state.types";
 
 const initialState: FilterState = {
   genre: null,
@@ -31,7 +26,7 @@ export const filterSlice = createSlice({
       }
     },
     toggleAuthorFilter: (state, action) => {
-      const { author } = action.payload;
+      const author = action.payload;
       if (state.author === author) {
         state.author = null;
       } else {

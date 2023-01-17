@@ -7,8 +7,12 @@ import { genresBreakpoints } from "../../utils/slider.config";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
+import { useDispatch } from "react-redux";
+import { setGenreFilter } from "../../store/slices/filters.slice";
+import { GenreLink } from "../Shared/GenreLink";
 
 export function GenreSlider() {
+  const dispatch = useDispatch();
   const { data, error, isLoading, isFetching } = useGetAllGenresQuery({});
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Failed to load</div>;
@@ -41,9 +45,9 @@ export function GenreSlider() {
               {genres.map((genre: Genre) => (
                 <SwiperSlide key={genre._id}>
                   <div className="flex items-center justify-center">
-                    <Link
-                      href={`/shop?genre=${genre.slug}`}
-                      tabIndex={0}
+                    <GenreLink
+                      href={`/shop`}
+                      slug={genre.slug}
                       className="rounded-lg border border-[#f0f0f0] bg-white text-heading p-3 text-sm rounded-md relative inline-block z-[1] font-bold shadow-explore mr-3"
                     >
                       <div className="mb-2">
@@ -58,7 +62,7 @@ export function GenreSlider() {
                       <h6 className="w-full flex justify-center text-lg text-heading font-medium">
                         {genre.name}
                       </h6>
-                    </Link>
+                    </GenreLink>
                   </div>
                 </SwiperSlide>
               ))}

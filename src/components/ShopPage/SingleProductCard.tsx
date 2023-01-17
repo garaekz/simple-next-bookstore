@@ -3,12 +3,16 @@ import Link from "next/link";
 import { Fragment } from "react";
 import { FaRegHeart, FaRegEye } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { addProduct } from "../../store/slices/cart.slice";
 import { Book } from "../../types/cart.types";
+import { BaseState } from "../../types/state.types";
 import RatingStars from "../RatingStars";
+import { AuthorLink } from "../Shared/AuthorLink";
 
 function SingleProductCard({ product }: { product: Book }) {
   const dispatch = useDispatch();
-
+  const { cart } = useSelector((state: BaseState) => state);
+  
   return (
     <div className="group relative mb-8 text-center md:text-left">
       {/* Thumbnail */}
@@ -74,14 +78,12 @@ function SingleProductCard({ product }: { product: Book }) {
         <h6 className="text-gray-400 text-sm mb-2.5">
           {product.authors.map((author, index) => (
             <Fragment key={author._id}>
-              <Link 
-              href={{
-                pathname: "/shop",
-                query: { author: author.slug },
-              }} 
-              className="hover:text-primary">
-                {author.name}
-              </Link>
+              <AuthorLink 
+                href={"/shop"} 
+                slug={author.slug}
+                className="hover:text-primary">
+                  {author.name}
+              </AuthorLink>
               {index !== product.authors.length - 1 && ", "}
             </Fragment>
           ))}

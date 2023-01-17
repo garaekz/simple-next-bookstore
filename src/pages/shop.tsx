@@ -5,34 +5,35 @@ import { ReactElement, useState } from "react";
 import Link from "next/link";
 import { FaTimes } from "react-icons/fa";
 import GenreFilter from "../components/ShopPage/GenreFilter";
-import { clearFilters, setGenreFilter } from "../store/slices/filters.slice";
+import { clearFilters, setAuthorFilter, setGenreFilter } from "../store/slices/filters.slice";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import ProductGrid from "../components/ShopPage/ProductGrid";
 import { BaseState } from "../types/state.types";
 import { useSelector } from "react-redux";
+import AuthorFilter from "../components/ShopPage/AuthorFilter";
 
 const Shop: NextPageWithLayout = () => {
   const dispatch = useDispatch();
-  const { query, route } = useRouter();
-  const isShopPage = route === '/shop';
+  const { query, pathname, events } = useRouter();
 
-  const filters = useSelector((state: BaseState) => state.filters);
   let page = 1;
-  const { page: queryPage, genre } = query;
+  const { page: queryPage } = query;
   if (queryPage) page = parseInt(queryPage as string);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(clearFilters());
-  }, [isShopPage, dispatch]);
-
-  useEffect(() => {
-    if (genre && genre !== filters.genre) {
-      dispatch(setGenreFilter(genre as string));
+    const handleRouteChange = (url: string) => {
+      if (url !== pathname) {
+        dispatch(clearFilters())
+      }clearFilters
     }
-  }, [genre, filters, dispatch]);
+    events.on('routeChangeStart', handleRouteChange)
+    return () => {
+      events.off('routeChangeStart', handleRouteChange)
+    }
+  }, [events, dispatch, pathname]);
 
   return (
     <>
@@ -86,44 +87,7 @@ const Shop: NextPageWithLayout = () => {
                 {/* Genres */}
                 <GenreFilter />
                 {/* Authors */}
-                {/* <div className="relative pb-10">
-                  <div
-                    className={`${
-                      isAuthorsOpen ? "after:w-full" : "after:w-0"
-                    } flex justify-between border-b-2 border-light mb-5 pb-2.5 relative items-center after:absolute after:bottom-[-2px] after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300`}
-                  >
-                    <h6 className="uppercase font-medium text-lg">author</h6>
-                    <button onClick={() => setIsAuthorsOpen(!isAuthorsOpen)}>
-                      {isAuthorsOpen ? <HiMinus /> : <HiPlus />}
-                    </button>
-                  </div>
-                  <div className="h-full">
-                    <ul
-                      className={`${
-                        !isAuthorsOpen ? "h-0" : "h-56"
-                      } transition-all duration-300 overflow-hidden -my-[5px]`}
-                    >
-                      {authors.map((author, index) => (
-                        <li className="m-0 py-[6px]" key={index}>
-                          <button
-                            className="flex items-center gap-3"
-                            onClick={() => filterProducts("author", author)}
-                          >
-                            {filter.type === "author" &&
-                            filter.filter === author ? (
-                              <BsCheckCircleFill className="text-primary" />
-                            ) : (
-                              <BsCircle className="text-body" />
-                            )}
-                            <span className="text-sm font-medium text-body">
-                              {author}
-                            </span>
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div> */}
+                <AuthorFilter />
                 <button
                   onClick={() => dispatch(clearFilters())}
                   className="block relative w-full text-center text-white bg-primary py-[15px] rounded-lg font-bold transition duration-300 before:absolute before:inset-0 before:w-full before:h-full before:transition before:transition-all before:duration-500 hover:before:scale-110 before:rounded-lg before:bg-primary before:z-[-1]"

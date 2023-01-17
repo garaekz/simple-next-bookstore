@@ -1,9 +1,8 @@
 import cartReducer from "./slices/cart.slice";
-import filtersReducer, { FilterState } from "./slices/filters.slice";
+import filtersReducer from "./slices/filters.slice";
 import { api } from "./api";
 import { configureStore } from "@reduxjs/toolkit";
 import { createWrapper } from "next-redux-wrapper";
-import { CartItem } from "../types/cart.types";
 
 export const store = () =>
   configureStore({
@@ -17,3 +16,5 @@ export const store = () =>
   });
 
 export const wrapper = createWrapper(store);
+export type RootState = ReturnType<typeof store.getState>
+export default store;

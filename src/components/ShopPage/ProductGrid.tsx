@@ -1,10 +1,6 @@
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { HiFilter } from "react-icons/hi";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { useGetPaginatedBooksQuery } from "../../store/api";
-import { changeSort, FilterState } from "../../store/slices/filters.slice";
 import { Book } from "../../types/cart.types";
 import { BaseState } from "../../types/state.types";
 import Paginator from "../Shared/Paginator";
@@ -12,8 +8,6 @@ import SingleProductCard from "./SingleProductCard";
 import SortProductsSelect from "./SortProductsSelect";
 
 function ProductGrid({ page }: { page: number }) {
-  const dispatch = useDispatch();
-  const router = useRouter();
   const filters = useSelector((state: BaseState) => state.filters);
   const { data, error, isLoading } = useGetPaginatedBooksQuery(
     { filters, page },
@@ -24,11 +18,6 @@ function ProductGrid({ page }: { page: number }) {
   const books = data?.data;
   const pagination = data?.pagination;
 
-  const isFirstDisabled = page === 1;
-  const isLastDisabled = page === pagination?.totalPages;
-  const isPrevDisabled = page === 1;
-  const isNextDisabled = page === pagination?.totalPages;
-
   return (
     <>
       {/* Select part */}
@@ -37,7 +26,11 @@ function ProductGrid({ page }: { page: number }) {
           <div className="mb-10">
             <div className="flex flex-wrap justify-between lg:justify-end items-center -m-2.5">
               <span className="m-2.5 font-medium">
-                {`Showing ${books.length} of ${pagination.totalItems} products`}
+                {pagination.totalItems > 0 ? (
+                  <span>
+                    Showing {books.length} of {pagination.totalItems} products
+                  </span>
+                ) : null}
               </span>
               <SortProductsSelect />
             </div>
@@ -53,17 +46,28 @@ function ProductGrid({ page }: { page: number }) {
       {/* Product grid */}
       <div className="flex flex-wrap -mx-4">
         {/* Single product */}
-        {books.map((book: Book, index: number) => (
-          <div
-            key={index}
-            className="px-4 w-full md:w-1/2 xl:w-1/3 max-w-full transition ease-in-out duration-300"
-          >
-            <SingleProductCard product={book} />
+        {pagination.totalPages > 0 ? (
+          books.map((book: Book, index: number) => (
+            <div
+              key={index}
+              className="px-4 w-full md:w-1/2 xl:w-1/3 max-w-full transition ease-in-out duration-300"
+            >
+              <SingleProductCard product={book} />
+            </div>
+          ))
+        ) : (
+          <div className="px-4 w-full max-w-full">
+            <div className="text-center">
+              <h3 className="text-2xl font-medium">No products found</h3>
+              <p className="text-gray-500 mt-2">
+                Try to change your filters or search again
+              </p>
+            </div>
           </div>
-        ))}
+        )}
       </div>
       <div className="flex justify-center mt-10">
-          <Paginator pagination={pagination} />
+        {pagination.totalPages > 1 && <Paginator pagination={pagination} />}
       </div>
     </>
   );

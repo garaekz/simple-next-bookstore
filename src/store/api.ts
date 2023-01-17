@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { FilterState } from './slices/filters.slice';
+import { FilterState } from '../types/state.types';
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL;
 

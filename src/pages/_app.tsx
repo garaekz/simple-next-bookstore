@@ -15,10 +15,8 @@ type AppPropsWithLayout = AppProps & {
 
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
-  const {store, props} = wrapper.useWrappedStore(pageProps);
+  const {props} = wrapper.useWrappedStore(pageProps);
   return getLayout(
-    <Provider store={store}>
       <Component {...props.pageProps} />
-    </Provider>
   );
 }

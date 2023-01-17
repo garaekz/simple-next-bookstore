@@ -1,5 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
+import { Fragment } from "react";
+import { useDispatch } from "react-redux";
 import { Author, Book, Genre } from "../../types/cart.types";
+import { addProduct } from "../../store/slices/cart.slice";
 import RatingStars from "../RatingStars";
 
 export function SingleBook({
@@ -20,6 +24,7 @@ export function SingleBook({
     description,
   } = book;
 
+  const dispatch = useDispatch();
   return (
     <>
       <div className="pt-[80px] pb-[80px]">
@@ -73,7 +78,7 @@ export function SingleBook({
                       )}
                       <div className="flex justify-between mb-10">
                         <button
-                          // onClick={() => dispatch(addProduct(book))}
+                          onClick={() => dispatch(addProduct(book))}
                           className="block relative w-full text-center text-white bg-primary py-[15px] rounded-md font-bold transition duration-300 before:absolute before:inset-0 before:w-full before:h-full before:transition before:transition-all before:duration-300 hover:before:scale-105 before:rounded-md before:bg-primary before:z-[-1]"
                         >
                           Add To Cart
@@ -81,25 +86,28 @@ export function SingleBook({
                       </div>
                       <div className="border-b border-light my-[30px] pb-[30px] flex items-center lg:justify-between">
                         <div>
-                          <span className="text-[20px] font-medium text-heading">
-                            Genre:{" "}
+                          <span className="font-medium text-heading">
+                            Genres:{" "}
                           </span>
-                          {genres.map((genre: Genre, index: number) => {
-                            return (
-                              <span
-                                key={index}
-                                className="text-[20px] font-medium text-heading ml-[10px]"
-                              >
+                          {genres.map((genre: Genre, index: number) => (
+                            <Fragment key={genre._id}>
+                              <Link 
+                              href={{
+                                pathname: "/shop",
+                                query: { genre: genre.slug },
+                              }} 
+                              className="hover:text-primary">
                                 {genre.name}
-                              </span>
-                            );
-                          })}
+                              </Link>
+                            {index !== genres.length - 1 && ", "}
+                          </Fragment>
+                          ))}
                         </div>
                         <div className="flex items-center">
-                          <span className="text-[20px] font-medium text-heading mr-2">
+                          <span className="font-medium text-heading mr-2">
                             Rating:{" "}
                           </span>
-                          <RatingStars className="text-xl" rating={rating} />
+                          <RatingStars rating={rating} />
                         </div>
                       </div>
                       <div className="mt-[80px]">
