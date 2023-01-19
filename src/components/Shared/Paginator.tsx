@@ -50,7 +50,7 @@ function Paginator ({ pagination }: { pagination: Pagination }) {
           return (
             <span
               key={index}
-              className="flex items-center text-gray-600 py-2.5 px-4 border-l border-gray-200 h-full"
+              className="flex items-center text-gray-600 py-2.5 px-4 border-r border-gray-200 h-full"
             >
               <RxDotsHorizontal />
             </span>
@@ -58,14 +58,14 @@ function Paginator ({ pagination }: { pagination: Pagination }) {
         }
         if (page === currentPage) {
           return (
-            <span key={index} className="text-xl font-bold py-2.5 px-5 border-l border-gray-200">
+            <span key={index} className="text-xl font-bold py-2.5 px-5 border-r border-gray-200">
               {page}
             </span>
           );
         }
         return (
           <Link href={`/shop?page=${page}`} key={index}>
-            <span className="text-gray-500 hover:text-gray-700 py-2.5 px-5 border-l border-gray-200">
+            <span className="text-gray-500 hover:text-gray-700 py-2.5 px-5 border-r border-gray-200">
               {page}
             </span>
           </Link>

@@ -28,7 +28,7 @@ function GenreFilter() {
         } flex justify-between border-b-2 border-light mb-5 pb-2.5 relative items-center after:absolute after:bottom-[-2px] after:left-0 after:h-[2px] after:bg-primary after:transition-all after:duration-300`}
       >
         <h6 className="uppercase font-medium text-lg">genre</h6>
-        <button onClick={() => setIsOpen(!isOpen)}>
+        <button onClick={() => setIsOpen(!isOpen)} name="Collapse Genre Filters">
           {isOpen ? <HiMinus /> : <HiPlus />}
         </button>
       </div>

@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { Author, Book, Genre } from "../../types/cart.types";
 import { addProduct } from "../../store/slices/cart.slice";
 import RatingStars from "../RatingStars";
+import { AuthorLink } from "../Shared/AuthorLink";
+import { GenreLink } from "../Shared/GenreLink";
 
 export function SingleBook({
   book,
@@ -35,7 +37,7 @@ export function SingleBook({
               <div className="h-full">
                 <div className="sticky top-[100px] z-0">
                   <div className="relative">
-                    <div className="relative block">
+                    <div className="relative block p-5 lg:p-10 xl:p-20 rounded-md">
                       <Image
                         src={cover}
                         alt={title}
@@ -58,9 +60,17 @@ export function SingleBook({
                         {title}
                       </h2>
                       <h6 className="mb-5 font-medium text-[20px] text-body">
-                        {authors
-                          .map((author: Author) => author.name)
-                          .join(", ")}
+                      {authors.map((author, index) => (
+                        <Fragment key={author._id}>
+                          <AuthorLink 
+                            href={"/shop"} 
+                            slug={author.slug}
+                            className="hover:text-primary">
+                              {author.name}
+                          </AuthorLink>
+                          {index !== authors.length - 1 && ", "}
+                        </Fragment>
+                      ))}
                       </h6>
                       {discountedPrice ? (
                         <div className="flex">
@@ -91,14 +101,12 @@ export function SingleBook({
                           </span>
                           {genres.map((genre: Genre, index: number) => (
                             <Fragment key={genre._id}>
-                              <Link 
-                              href={{
-                                pathname: "/shop",
-                                query: { genre: genre.slug },
-                              }} 
+                              <GenreLink 
+                              href="/shop"
+                              slug={genre.slug}
                               className="hover:text-primary">
                                 {genre.name}
-                              </Link>
+                              </GenreLink>
                             {index !== genres.length - 1 && ", "}
                           </Fragment>
                           ))}

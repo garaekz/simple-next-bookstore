@@ -9,8 +9,6 @@ import { clearFilters, setAuthorFilter, setGenreFilter } from "../store/slices/f
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import ProductGrid from "../components/ShopPage/ProductGrid";
-import { BaseState } from "../types/state.types";
-import { useSelector } from "react-redux";
 import AuthorFilter from "../components/ShopPage/AuthorFilter";
 
 const Shop: NextPageWithLayout = () => {
@@ -22,6 +20,7 @@ const Shop: NextPageWithLayout = () => {
   if (queryPage) page = parseInt(queryPage as string);
 
   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const openFiltersMenu = () => setIsFiltersOpen(true);
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
@@ -97,7 +96,7 @@ const Shop: NextPageWithLayout = () => {
               </div>
             </div>
             <div className="px-4 w-full lg:w-3/4 max-w-full shrink-0">
-              <ProductGrid page={page} />
+              <ProductGrid page={page} openFiltersMenu={openFiltersMenu} />
             </div>
           </div>
         </div>

@@ -4,29 +4,36 @@ import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { FcShop } from "react-icons/fc";
-import { IoCartOutline } from "react-icons/io5";
+import { IoCartOutline, IoPersonOutline } from "react-icons/io5";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { BaseState } from "../types/state.types";
 import SingleCartProduct from "./Cart/SingleCartProduct";
 import { useAddToCartToast } from "../hooks/addToCart.hook";
+import { CgHeart, CgSearch } from "react-icons/cg";
+import NotYetModal from "./NotYetModal";
 
 function MainNavbar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false); 
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isNotYetModalOpen, setIsNotYetModalOpen] = useState(false);
+
   const cart = useSelector((state: BaseState) => state.cart);
-  console.log(cart);
   const cartQuantity = cart.totalQuantity;
   const cartTotal = cart.totalPrice;
   const closeAllMenus = () => {
     setIsMenuOpen(false);
     setIsCartOpen(false);
   };
+
+  const closeNotYetModal = () => setIsNotYetModalOpen(false);
+
   useAddToCartToast();
 
   return (
     <>
+      <NotYetModal isOpen={isNotYetModalOpen} onClose={closeNotYetModal} />
       <header className="py-[15px] lg:py-0 fixed h-20 inset-x-0 top-0 bg-white z-30 flex items-center">
         {/* Backdrop */}
         {(isMenuOpen || isCartOpen) && (
@@ -36,13 +43,13 @@ function MainNavbar() {
           ></div>
         )}
         <div className="px-[15px] h-full w-full md:max-w-screen-md lg:max-w-screen-lg xl:max-w-screen-xl 2xl:max-w-screen-2xl mx-auto flex items-center">
-          <div className="flex items-center w-full">
-            <div>
+          <div className="flex justify-between items-center w-full">
+            <div className="">
               <Link href="/">
                 <Image src="/react.svg" alt="Logo" width={35} height={35} />
               </Link>
             </div>
-            <div className="ml-[150px] mx-[50px] lg:mx-[20px] flex-1">
+            <div className="md:ml-[150px] md:mx-[50px] lg:mx-[20px] flex-1 md:block">
               <nav
                 className={`${
                   isMenuOpen ? "right-0" : "right-[-250px]"
@@ -50,13 +57,14 @@ function MainNavbar() {
               >
                 <button
                   onClick={() => setIsMenuOpen(false)}
+                  name="Close Cart Menu"
                   className="lg:hidden absolute top-[19px] right-[15px] h-[35px] w-[35px] bg-lighter rounded-full text-xs"
                 >
                   <FaTimes className="inline-block" />
                 </button>
                 <div className="lg:hidden mb-[30px]">
                   <Link href="/">
-                    <FcShop className="inline-block" />
+                    <Image src="/react.svg" alt="Logo" width={35} height={35} />
                   </Link>
                 </div>
                 <ul className="block h-full overflow-y-auto m-0 lg:flex lg:items-center lg:flex-wrap lg:justify-center lg:p-0">
@@ -67,7 +75,7 @@ function MainNavbar() {
                         router.pathname === "/"
                           ? "before:w-full before:opacity-1"
                           : "before:w-0 before:opacity-0"
-                      } text-body lg:text-heading lg:h-[80px] lg:leading-[80px] lg:block h-auto py-[5px] lg:p-0 inline-block font-bold relative duration-300 before:h-[2px] before:bg-black before:absolute before:bottom-[29px] before:left-0 before:transition-all before:duration-500 hover:before:w-full hover:before:opacity-100`}
+                      } text-body lg:text-heading lg:h-[80px] lg:leading-[80px] lg:block h-auto py-[5px] lg:p-0 inline-block font-bold relative duration-300 before:h-[2px] before:bg-black before:absolute before:bottom-0 before:lg:bottom-[29px] before:left-0 before:transition-all before:duration-500 hover:before:w-full hover:before:opacity-100`}
                     >
                       Home
                     </Link>
@@ -79,7 +87,7 @@ function MainNavbar() {
                         router.pathname === "/shop"
                           ? "before:w-full before:opacity-1"
                           : "before:w-0 before:opacity-0"
-                      } text-body lg:text-heading lg:h-[80px] lg:leading-[80px] lg:block h-auto py-[5px] lg:p-0 inline-block font-bold relative duration-300 before:h-[2px] before:bg-black before:absolute before:bottom-[29px] before:left-0 before:transition-all before:duration-500 hover:before:w-full hover:before:opacity-100`}
+                      } text-body lg:text-heading lg:h-[80px] lg:leading-[80px] lg:block h-auto py-[5px] lg:p-0 inline-block font-bold relative duration-300 before:h-[2px] before:bg-black before:absolute before:bottom-0 before:lg:bottom-[29px] before:left-0 before:transition-all before:duration-500 hover:before:w-full hover:before:opacity-100`}
                     >
                       Shop
                     </Link>
@@ -91,6 +99,20 @@ function MainNavbar() {
             <div className="mt-1">
               <ul className="flex items-center gap-6">
                 <li>
+                  <button 
+                    onClick={() => setIsNotYetModalOpen(true)}
+                    className="flex justify-center items-center duration-300 hover:text-white after:w-[45px] after:h-[45px] after:bg-secondary after:rounded-full after:absolute after:z-[-1] after:scale-0 hover:after:scale-100 after:duration-300">
+                    <CgSearch className="text-2xl" />
+                  </button>
+                </li>
+                <li>
+                  <button 
+                    onClick={() => setIsNotYetModalOpen(true)}
+                    className="flex justify-center items-center duration-300 hover:text-white after:w-[45px] after:h-[45px] after:bg-secondary after:rounded-full after:absolute after:z-[-1] after:scale-0 hover:after:scale-100 after:duration-300">
+                    <CgHeart className="text-2xl" />
+                  </button>
+                </li>
+                <li>
                   <button
                     onClick={() => setIsCartOpen(true)}
                     className="relative flex justify-center items-center duration-300 hover:text-white after:w-[45px] after:h-[45px] after:bg-secondary after:rounded-full after:absolute after:z-[-1] after:scale-0 hover:after:scale-100 after:duration-300"
@@ -101,6 +123,13 @@ function MainNavbar() {
                       </span>
                     )}
                     <IoCartOutline className="text-3xl" />
+                  </button>
+                </li>
+                <li>
+                  <button
+                    onClick={() => setIsNotYetModalOpen(true)}
+                    className="flex justify-center items-center duration-300 hover:text-white after:w-[45px] after:h-[45px] after:bg-secondary after:rounded-full after:absolute after:z-[-1] after:scale-0 hover:after:scale-100 after:duration-300">
+                    <IoPersonOutline className="text-2xl" />
                   </button>
                 </li>
                 <li className="lg:hidden">
@@ -118,7 +147,7 @@ function MainNavbar() {
       </header>
       <div
         className={`${
-          isCartOpen ? "right-0" : "right-[-600px]"
+          isCartOpen ? "right-0" : "right-[-800px]"
         } w-full md:w-[600px] fixed inset-y-0 z-40 transition-all duration-500`}
       >
         <div className="scrollbar bg-white h-full w-full md:w-[600px] flex flex-col py-[30px] px-[15px] md:py-[60px] md:px-[50px] overflow-auto">
@@ -146,18 +175,18 @@ function MainNavbar() {
               <span>${cartTotal.toFixed(2)}</span>
             </h3>
             <div className="flex gap-6 font-bold">
-              <Link
-                href="/shop"
+              <button
+                onClick={() => setIsNotYetModalOpen(true)}
                 className="block relative w-full text-center text-white bg-primary py-[15px] rounded-md transition duration-300 before:absolute before:inset-0 before:w-full before:h-full before:transition before:transition-all before:duration-500 hover:before:scale-110 before:rounded before:bg-primary z-10 before:z-[-1]"
               >
                 View Cart
-              </Link>
-              <Link
-                href="/shop"
+              </button>
+              <button
+                onClick={() => setIsNotYetModalOpen(true)}
                 className="block relative w-full text-center text-white bg-secondary py-[15px] rounded-md transition duration-300 before:absolute before:inset-0 before:w-full before:h-full before:transition before:transition-all before:duration-500 hover:before:scale-110 before:rounded before:bg-secondary z-10 before:z-[-1]"
               >
                 Checkout
-              </Link>
+              </button>
             </div>
           </div>
         </div>

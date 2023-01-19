@@ -7,7 +7,7 @@ import Paginator from "../Shared/Paginator";
 import SingleProductCard from "./SingleProductCard";
 import SortProductsSelect from "./SortProductsSelect";
 
-function ProductGrid({ page }: { page: number }) {
+function ProductGrid({ page, openFiltersMenu }: { page: number, openFiltersMenu: () => void }) {
   const filters = useSelector((state: BaseState) => state.filters);
   const { data, error, isLoading } = useGetPaginatedBooksQuery(
     { filters, page },
@@ -35,7 +35,7 @@ function ProductGrid({ page }: { page: number }) {
               <SortProductsSelect />
             </div>
             <button
-              //onClick={() => setIsFiltersOpen(true)}
+              onClick={() => openFiltersMenu()}
               className="lg:hidden mt-5 md:mt-2.5 uppercase text-sm flex items-center"
             >
               <HiFilter className="mr-2 text-lg" /> filter

@@ -14,8 +14,6 @@ import { GenreLink } from "../Shared/GenreLink";
 export function GenreSlider() {
   const dispatch = useDispatch();
   const { data, error, isLoading, isFetching } = useGetAllGenresQuery({});
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Failed to load</div>;
   const genres = data?.data;
   return (
     <>
@@ -31,6 +29,18 @@ export function GenreSlider() {
             Browse through our genres
           </h1>
           <div className="">
+          { error && <>Error: {error}</> }
+          { isLoading && 
+            <div className="flex flex-nowrap shrink-0 overflow-hide animate-pulse pt-[200px] gap-10 px-4">
+              <div className="w-60 h-32 bg-gray-200 rounded-md"></div>
+              <div className="w-60 h-32 bg-gray-200 rounded-md"></div>
+              <div className="w-60 h-32 bg-gray-200 rounded-md hidden md:block"></div>
+              <div className="w-60 h-32 bg-gray-200 rounded-md hidden lg:block"></div>
+              <div className="w-60 h-32 bg-gray-200 rounded-md hidden xl:block"></div>
+              <div className="w-60 h-32 bg-gray-200 rounded-md hidden xl:block"></div>
+            </div>
+          }
+          { !isLoading && !error && genres &&
             <Swiper
               slidesPerView={6}
               spaceBetween={30}
@@ -67,6 +77,7 @@ export function GenreSlider() {
                 </SwiperSlide>
               ))}
             </Swiper>
+          }
           </div>
         </div>
       </div>

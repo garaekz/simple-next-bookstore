@@ -8,7 +8,7 @@ function SingleProductSkeleton() {
             <div className="sticky top-[100px] z-0">
               <div className="relative">
                 <div className="relative block">
-                  <div className="w-full rounded-md xl:h-[800px] h-[450px] xl:w-[450px]mx-auto bg-gray-200" />
+                  <div className="w-full rounded-md xl:h-[800px] h-[450px] xl:w-[450px] mx-auto bg-gray-200" />
                 </div>
               </div>
             </div>

@@ -9,9 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper";
 
 export function HeaderWithSlider() {
-  const { data, error, isLoading, isFetching } = useGetFeaturedBooksQuery({});
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Failed to load</div>;
+  const { data, error, isLoading } = useGetFeaturedBooksQuery({});
   const featuredBooks = data?.data;
   return (
     <>
@@ -37,7 +35,16 @@ export function HeaderWithSlider() {
         </div>
       </div>
       <div className="w-full xl:w-1/2">
-        <Swiper
+        { error && <>Error: {error}</> }
+        { isLoading && 
+          <div className="flex animate-pulse pb-20 pt-[200px]">
+            <div className="w-full h-[400px] bg-gray-200 rounded-md"></div>
+            <div className="w-full h-[400px] bg-gray-200 rounded-md scale-125"></div>
+            <div className="w-full h-[400px] bg-gray-200 rounded-md"></div>
+          </div>
+        }
+        { featuredBooks && (
+          <Swiper
           navigation={true}
           modules={[Navigation]}
           slidesPerView={3}
@@ -47,12 +54,13 @@ export function HeaderWithSlider() {
           breakpoints={featuredBreakpoints}
           className="featured-slider"
         >
-          {featuredBooks.map((product: Book, index: number) => (
+          { featuredBooks.map((product: Book, index: number) => (
             <SwiperSlide key={index}>
               <FeaturedProductCard key={index} product={product} />
             </SwiperSlide>
           ))}
-        </Swiper> 
+        </Swiper>
+        )}
       </div>
     </>
   );

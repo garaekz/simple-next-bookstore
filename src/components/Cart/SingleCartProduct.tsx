@@ -1,16 +1,14 @@
 import { FaMinus, FaPlus, FaTimes } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { updateProduct, removeProduct } from "../../store/slices/cart.slice";
 import RatingStars from "../RatingStars";
-import { BaseState } from "../../types/state.types";
 import { CartItem } from "../../types/cart.types";
 import Image from "next/image";
 import { AuthorLink } from "../Shared/AuthorLink";
 
 function SingleCartProduct({ item }: { item: CartItem }) {
   const dispatch = useDispatch();
-  const cart = useSelector((state: BaseState) => state.cart);
   const removeFromCart = (id: string) => {
     dispatch(removeProduct(id));
   };
@@ -78,12 +76,12 @@ function SingleCartProduct({ item }: { item: CartItem }) {
           ).toFixed(2)}
         </div>
         <div className="flex items-center absolute top-1/2 right-0 justify-end">
-          <span
+          <button
             onClick={() => updateQuantity(item.book._id, item.quantity - 1)}
             className="text-[10px] flex items-center justify-center cursor-pointer h-[26px] w-[26px] bg-[#f6f7fb] rounded-full transition-all"
           >
             <FaMinus />
-          </span>
+          </button>
           <input
             type="number"
             min={0}
@@ -93,12 +91,12 @@ function SingleCartProduct({ item }: { item: CartItem }) {
             }
             className="font-semibold text-[#27272e] h-[26px] w-[30px] border-none text-center p-0 outline-none"
           />
-          <span
+          <button
             onClick={() => updateQuantity(item.book._id, item.quantity + 1)}
             className="text-[10px] flex items-center justify-center cursor-pointer h-[26px] w-[26px] bg-[#f6f7fb] rounded-full transition-all"
           >
             <FaPlus />
-          </span>
+          </button>
         </div>
       </div>
     </li>
