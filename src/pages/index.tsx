@@ -17,16 +17,16 @@ const Home: NextPageWithLayout = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta property="og:title" content="Simple Next Bookstore | Home" />
         <meta property="og:description" content="Simple Next Bookstore" />
-        <meta property="og:image" content="https://i.imgur.com/8QJrYTI.png" />
-        <meta property="og:url" content="https://simple-next-bookstore.vercel.app/" />
+        <meta property="og:image" content="/images/react-banner.jpg" />
+        <meta property="og:url" content="https://simplenextbookstore.vercel.app/" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@garaekz" />
         <meta name="twitter:creator" content="@garaekz" />
         <meta name="twitter:title" content="Simple Next Bookstore | Home" />
         <meta name="twitter:description" content="Simple Next Bookstore" />
-        <meta name="twitter:image" content="https://i.imgur.com/8QJrYTI.png" />
+        <meta name="twitter:image" content="/images/react-banner.jpg" />
 
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/react.svg" />
       </Head>
       
       <div className="pt-10 pb-[70px] xl:py-[110px] bg-light">

@@ -10,8 +10,6 @@ export const api = createApi({
     getPaginatedBooks: builder.query({
       query: (params: {page: number, filters: FilterState}) => {
         let { page, filters } = params;
-        console.log('page', page);
-        console.log('filters', filters);
         if (page < 1) {
           page = 1;
         }
@@ -30,7 +28,6 @@ export const api = createApi({
     }),
     getBook: builder.query({
       query: (slug: string) => {
-        console.log('getBook');
         return `books/${slug}`
       },
     }),
