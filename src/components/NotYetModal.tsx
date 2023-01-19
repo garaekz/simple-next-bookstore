@@ -51,10 +51,10 @@ const NotYetModal: FC<Props> = ({ isOpen, onClose }) => {
                   </div>
                   <div className="px-10">
                     <h3 className="text-[30px] font-bold text-heading mt-[20px] mb-[15px]">
-                      Hang tight, we're building something awesome!
+                      Hang tight, we&apos;re building something awesome!
                     </h3>
                     <p className="text-body mb-[30px]">
-                      We're hard at work putting the finishing touches on this
+                      We&apos;re hard at work putting the finishing touches on this
                       section of our bookstore. While you wait, why not check
                       out{" "}
                       <a
@@ -65,7 +65,7 @@ const NotYetModal: FC<Props> = ({ isOpen, onClose }) => {
                       >
                         our GitHub repo
                       </a>{" "}
-                      to see our progress and leave a star if you're loving it
+                      to see our progress and leave a star if you&apos;re loving it
                       so far.
                     </p>
                   </div>
